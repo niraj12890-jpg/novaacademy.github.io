@@ -1,348 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVA ACADEMY – Online AI Workshops & Training</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NOVA ACADEMY — Workshops & Training</title>
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style>
-    body {
-        background: #020b33;
-        font-family: 'Poppins', sans-serif;
-        color: #fff;
+  <style>
+    :root{
+      --bg:#020b33;
+      --card:#061046;
+      --neon:#3a86ff;
+      --neon-2:#00f2ff;
+      --accent:#0d6efd;
+      --success:#00cc66;
+      --danger:#ff004c;
+    }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#fff;
+      font-family:'Poppins',sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
     /* NAVBAR */
     .navbar {
-        background: #061046;
-        border-bottom: 2px solid #3a86ff;
-        box-shadow: 0 0 15px #3a86ff;
+      background: linear-gradient(180deg, rgba(3,6,23,.9), rgba(6,10,40,.9));
+      border-bottom: 2px solid rgba(58,134,255,0.12);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
-    .navbar-brand {
-        font-size: 28px;
-        font-weight: 700;
-        color: #00d4ff !important;
-        text-shadow: 0 0 15px #00d4ff;
-    }
-    .nav-link {
-        color: #fff !important;
-        font-weight: 500;
-        margin-right: 20px;
-    }
-    .nav-link:hover {
-        color: #00d4ff !important;
-    }
+    .navbar-brand{ color:var(--neon-2); font-weight:700; text-shadow:0 0 14px rgba(0,242,255,0.14) }
+    .nav-link{ color:#e6f0ff !important; font-weight:500 }
+    .nav-link:hover{ color:var(--neon-2) !important }
 
     /* HERO */
     .hero {
-        height: 80vh;
-        background: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769') center/cover;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        box-shadow: inset 0 0 200px black;
+      background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,35,0.55)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      min-height:70vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:56px 16px;
+      box-shadow: inset 0 0 140px rgba(0,0,0,.5);
+    }
+    .hero h1{ font-size:2.6rem; line-height:1.05; text-shadow:0 0 20px var(--neon); color:#fff; }
+    .hero p{ color: #dfeeff; font-size:1.05rem; margin-top:10px }
+
+    /* marquee */
+    .top-marquee{
+      background: #001a66;
+      color: var(--neon-2);
+      padding:8px 12px;
+      font-weight:600;
+      text-shadow:0 0 8px rgba(58,134,255,0.2);
     }
 
-    .hero h1 {
-        font-size: 48px;
-        text-shadow: 0 0 20px #3a86ff;
+    /* cards */
+    .card-neon{
+      background:var(--card);
+      border-radius:14px;
+      border:1px solid rgba(58,134,255,0.12);
+      box-shadow: 0 8px 30px rgba(10,20,60,0.6);
+      color:#fff;
+    }
+    .workshop-card, .trainer-card, .stats-box{
+      padding:18px;
+      min-height: 270px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .workshop-card h4, .trainer-card h4 { margin-top:6px }
+
+    .btn-neon{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      box-shadow:0 6px 30px rgba(13,110,253,0.18);
     }
 
-    .btn-neon {
-        background: #0d6efd;
-        color: white;
-        border: none;
-        box-shadow: 0 0 15px #0d6efd;
+    img.round{
+      width:120px; height:120px; object-fit:cover; border-radius:999px;
+      border:4px solid rgba(58,134,255,0.18); box-shadow:0 6px 30px rgba(58,134,255,0.08);
     }
 
-    /* MARQUEE */
-    marquee {
-        background: #001060;
-        color: #00eaff;
-        padding: 10px;
-        font-weight: bold;
-        font-size: 18px;
-        box-shadow: 0 0 15px #0d6efd;
+    /* POPUP (full-screen blur) */
+    .popup-overlay{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      z-index:2000;
+    }
+    .popup {
+      width:94%;
+      max-width:560px;
+      background:linear-gradient(180deg, rgba(6,8,28,0.95), rgba(8,12,48,0.98));
+      border-radius:12px;
+      padding:24px;
+      border:2px solid rgba(58,134,255,0.12);
+      box-shadow: 0 12px 50px rgba(10,20,60,0.7);
+      color:#fff;
+    }
+    .popup h3{ color:var(--neon-2); text-shadow:0 0 12px rgba(0,242,255,0.08) }
+    .form-label { color: rgba(58,134,255,0.95); font-weight:600 }
+    .popup .form-control {
+      background:#00112a; color:#e9f5ff; border:1px solid rgba(58,134,255,0.16);
+    }
+    .popup .form-control::placeholder { color: rgba(200,230,255,0.35) }
+
+    /* thank-you */
+    .thank-box{
+      text-align:center;
+    }
+    .small-muted{ color:rgba(255,255,255,0.6); font-size:.95rem }
+
+    /* responsive tweaks */
+    @media (max-width:576px){
+      .hero h1{ font-size:1.9rem }
+      .workshop-card, .trainer-card { min-height: auto }
     }
 
-    /* WORKSHOP CARDS */
-    .workshop-card {
-        background: #061046;
-        border: 2px solid #3a86ff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 0 20px #3a86ff;
-        height: 100%;
-    }
-
-    /* TRAINER CARDS */
-    .trainer-card {
-        background: #061046;
-        border: 2px solid #5e00ff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 0 25px #5e00ff;
-        text-align: center;
-        height: 100%;
-    }
-    .trainer-card img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 3px solid #5e00ff;
-        box-shadow: 0 0 15px #5e00ff;
-    }
-
-    /* YEARLY STATS */
-    .stats-box {
-        background: #061046;
-        padding: 20px;
-        border-radius: 15px;
-        border: 2px solid #00f2ff;
-        box-shadow: 0 0 20px #00f2ff;
-        text-align: center;
-    }
-
-    /* POPUP FORMS */
-    .popup-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.85);
-        backdrop-filter: blur(6px);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 999999;
-    }
-    .popup-box {
-        background: #061046;
-        width: 90%;
-        max-width: 500px;
-        padding: 30px;
-        border-radius: 15px;
-        border: 2px solid #3a86ff;
-        box-shadow: 0 0 25px #3a86ff;
-        color: white;
-    }
-    .popup-box .form-control {
-        background: #000c2e;
-        border: 1px solid #3a86ff;
-        color: white;
-    }
-    .popup-box .form-control:focus {
-        border-color: #00bfff;
-        box-shadow: 0 0 12px #00bfff;
-    }
-</style>
+    /* floating whatsapp */
+    .whatsapp-float{ position:fixed; right:18px; bottom:22px; z-index:1500 }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg px-4">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark px-4">
     <a class="navbar-brand" href="#">NOVA ACADEMY</a>
-    <div class="d-flex">
-        <a class="nav-link" href="#home">Home</a>
-        <a class="nav-link" href="#about">About Us</a>
-        <a class="nav-link" href="#workshop">Workshop</a>
-        <a class="nav-link" href="#trainers">Trainers</a>
-        <a class="nav-link" href="#contact">Contact Us</a>
+    <div class="ms-auto d-none d-lg-flex align-items-center">
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#workshop">Workshop</a>
+      <a class="nav-link" href="#trainers">Trainers</a>
+      <a class="nav-link" href="#contact">Contact</a>
+      <!-- Admin / Dashboard button (replace SHEET URL below) -->
+      <a id="openDashboard" class="btn btn-outline-light ms-3" target="_blank" href="https://script.google.com/macros/s/AKfycbyccgLZzOhFESD0AsgX_SLA8LSoVzNZ8nxwJ4ztYt-x_xsM-Tsd89q-msNJLc4KruU-mA/exec">Open Dashboard</a>
     </div>
-</nav>
+  </nav>
 
-<!-- MARQUEE -->
-<marquee>🔥 New Workshop Announced! — AI in Mathematical Modeling Starting Soon — Limited Seats!</marquee>
+  <!-- MARQUEE -->
+  <div class="top-marquee text-center">
+    🔥 Latest Update: AI in Mathematical Modeling — early bird discount live! — Register Now 🔥
+  </div>
 
-<!-- HERO -->
-<section id="home">
-    <div class="hero">
-        <div>
-            <h1>Advance Your Future With AI Workshops</h1>
-            <button class="btn btn-neon mt-4" onclick="openPopup('enquirePopup')">Enquire Now</button>
-        </div>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <h1>Welcome to Nova Academy — Learn AI, Python & Modeling</h1>
+      <p class="lead">Short hands-on workshops built by industry practitioners.</p>
+      <div class="mt-4 d-flex justify-content-center gap-3">
+        <button class="btn btn-neon btn-lg" onclick="openPopup('enquirePopup')">Enquire Now</button>
+        <button class="btn btn-success btn-lg" onclick="openPopup('registerPopup')">Register Now</button>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ABOUT -->
-<section id="about" class="container py-5">
-    <h2 class="text-center mb-4" style="text-shadow:0 0 15px #00eaff;">About Nova Academy</h2>
-    <p class="text-center">
-        Nova Academy provides world-class online training in AI, Python, and Mathematical Modeling.
-    </p>
-</section>
+  <!-- ABOUT -->
+  <section class="container py-5" id="about">
+    <h2 class="text-center mb-4" style="text-shadow:0 0 12px rgba(58,134,255,0.08)">About Nova Academy</h2>
+    <p class="text-center small-muted">We run small cohort workshops focusing on practical AI & mathematical simulation using Python — learn from mentors and build real projects.</p>
+  </section>
 
-<!-- UPCOMING WORKSHOP -->
-<section id="workshop" class="container py-5">
-    <h2 class="text-center mb-4" style="text-shadow:0 0 15px #3a86ff;">Upcoming Workshop</h2>
+  <!-- UPCOMING WORKSHOPS -->
+  <section id="workshop" class="container py-5">
+    <h2 class="text-center mb-4" style="text-shadow:0 0 10px rgba(13,110,253,0.08)">Upcoming Workshops</h2>
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="workshop-card">
-                <h4>AI in Mathematical Modeling</h4>
-                <p>Duration: 5 Days</p>
-                <p>Date: 15 Feb 2025</p>
-                <p>Fee: ₹499</p>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enquireModal">Enquire Now</button>
-
-<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">Register Now</button>
-
-                </div>
-            </div>
+      <div class="col-md-4">
+        <div class="workshop-card card-neon">
+          <div>
+            <h4>AI in Mathematical Modeling</h4>
+            <p class="small-muted mb-1">Duration: 5 days</p>
+            <p class="small-muted mb-2">Date: 15 Feb 2026</p>
+            <p class="small-muted">Fee: ₹499</p>
+          </div>
+          <div class="mt-2 d-grid gap-2">
+            <button class="btn btn-success" onclick="openPopup('registerPopup')">Register Now</button>
+            <button class="btn btn-neon" onclick="openPopup('enquirePopup')">Enquire Now</button>
+          </div>
         </div>
+      </div>
+      <!-- add more cards as needed -->
     </div>
-</section>
+  </section>
 
-<!-- TRAINERS -->
-<section id="trainers" class="container py-5">
-    <h2 class="text-center mb-4" style="text-shadow:0 0 15px #ff00ea;">Meet Our Trainers</h2>
+  <!-- TRAINERS -->
+  <section id="trainers" class="container py-5">
+    <h2 class="text-center mb-4">Meet Our Trainers</h2>
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="trainer-card">
-                <img src="https://i.pravatar.cc/200?img=12">
-                <h4 class="mt-3">Rahul Sharma</h4>
-                <p>AI Engineer & Python Expert</p>
-                <button class="btn btn-neon w-100" onclick="openPopup('enquirePopup')">View Profile</button>
-            </div>
+      <div class="col-md-4">
+        <div class="trainer-card card-neon text-center">
+          <img class="round mx-auto" src="https://i.pravatar.cc/200?img=32" alt="trainer">
+          <h4>Mr. Rahul Verma</h4>
+          <p class="small-muted">AI & Python Specialist</p>
+          <button class="btn btn-neon w-100" onclick="openPopup('enquirePopup')">Contact / View</button>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- YEARLY STATS -->
-<section class="container py-5">
-    <h2 class="text-center mb-4" style="text-shadow:0 0 15px #00f2ff;">Yearly Records</h2>
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="stats-box">
-                <h3>2024</h3>
-                <p>Total Enquired: 890</p>
-                <p>Total Registered: 740</p>
-                <p>Total Completed: 720</p>
-            </div>
+  <!-- YEARLY STATS -->
+  <section class="container py-5">
+    <h2 class="text-center mb-4">Yearly Records</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-3">
+        <div class="stats-box card-neon">
+          <h3>2024</h3>
+          <p>Total Enquired: <strong>890</strong></p>
+          <p>Total Registered: <strong>740</strong></p>
+          <p>Total Completed: <strong>720</strong></p>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact" class="container py-5 text-center">
-    <h2 style="text-shadow:0 0 15px #0d6efd;">Contact Us</h2>
-    <p>Email: support@novaacademy.com</p>
-    <p>Phone: +91 98765 43210</p>
-</section>
+  <!-- CONTACT -->
+  <section id="contact" class="container py-5 text-center">
+    <h2>Contact Us</h2>
+    <p class="small-muted">Email: info@novaacademy.com • Phone: +91 98765 43210</p>
+  </section>
 
-<!-- FOOTER -->
-<footer class="text-center py-3" style="background:#001060;">
+  <!-- FOOTER -->
+  <footer class="text-center py-3" style="background:#001030; border-top:1px solid rgba(58,134,255,0.06)">
     © 2025 Nova Academy — All Rights Reserved
-</footer>
+  </footer>
 
-<!-- ENQUIRE FORM POPUP -->
-<div class="modal fade" id="enquireModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content neon-card">
-      <div class="modal-header">
-        <h5 class="modal-title">Enquire Now</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+  <!-- FLOATING WHATSAPP -->
+  <a class="whatsapp-float" href="https://wa.me/919876543210" target="_blank" title="Chat on WhatsApp">
+    <img src="https://i.imgur.com/2pQeI5H.png" alt="WhatsApp" width="60" style="filter: drop-shadow(0 6px 16px rgba(0,255,170,0.08))">
+  </a>
 
-      <div class="modal-body">
-        <form id="enquireForm">
-          <input type="text" class="form-control mb-2" name="name" placeholder="Your Name" required>
-          <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
-          <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" required>
-          <input type="text" class="form-control mb-2" name="course" placeholder="Interested Course">
-          <textarea class="form-control mb-2" name="message" placeholder="Message"></textarea>
+  <!-- ================= POPUPS: ENQUIRE, REGISTER, THANK-YOU ================= -->
 
-          <button type="submit" class="btn btn-primary w-100">Submit Enquiry</button>
-        </form>
+  <!-- Enquire Popup -->
+  <div id="enquirePopup" class="popup-overlay" aria-hidden="true">
+    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="enquireTitle">
+      <h3 id="enquireTitle">Enquiry Form</h3>
+
+      <form id="enquireForm" autocomplete="off" class="mt-3">
+        <div class="mb-2">
+          <label class="form-label">Full name</label>
+          <input name="name" type="text" class="form-control" placeholder="Your full name" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Email</label>
+          <input name="email" type="email" class="form-control" placeholder="you@domain.com" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Phone</label>
+          <input name="phone" type="tel" class="form-control" placeholder="+91 9xxxxxxxxx" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Workshop</label>
+          <select name="course" class="form-control" required>
+            <option>AI in Mathematical Modeling</option>
+            <option>Python for Data Science</option>
+            <option>Machine Learning Basics</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Message</label>
+          <textarea name="message" class="form-control" rows="3" placeholder="How can we help? (optional)"></textarea>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button id="enquireSubmit" class="btn btn-neon" type="submit">Send Enquiry</button>
+          <button type="button" class="btn btn-outline-light" onclick="closePopup('enquirePopup')">Back</button>
+        </div>
+
+        <div id="enquireFeedback" class="mt-3 small-muted" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Popup -->
+  <div id="registerPopup" class="popup-overlay" aria-hidden="true">
+    <div class="popup" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+      <h3 id="registerTitle" style="color:#9effc7; text-shadow:0 0 10px rgba(0,255,170,0.06)">Register Form</h3>
+
+      <form id="registerForm" autocomplete="off" class="mt-3">
+        <div class="mb-2">
+          <label class="form-label">Full name</label>
+          <input name="name" type="text" class="form-control" placeholder="Your full name" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Email</label>
+          <input name="email" type="email" class="form-control" placeholder="you@domain.com" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Phone</label>
+          <input name="phone" type="tel" class="form-control" placeholder="+91 9xxxxxxxxx" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Workshop</label>
+          <select name="course" class="form-control" required>
+            <option>AI in Mathematical Modeling</option>
+            <option>Python for Data Science</option>
+            <option>Machine Learning Basics</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">City</label>
+          <input name="city" type="text" class="form-control" placeholder="Your city (optional)">
+        </div>
+
+        <div class="d-grid gap-2">
+          <button id="registerSubmit" class="btn btn-success" type="submit">Complete Registration</button>
+          <button type="button" class="btn btn-outline-light" onclick="closePopup('registerPopup')">Back</button>
+        </div>
+
+        <div id="registerFeedback" class="mt-3 small-muted" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Thank-you popup -->
+  <div id="thankPopup" class="popup-overlay" aria-hidden="true">
+    <div class="popup thank-box" role="dialog" aria-modal="true" aria-labelledby="thankTitle">
+      <h3 id="thankTitle" style="color:var(--neon-2)">Thank you!</h3>
+      <p class="small-muted">Your submission has been received. We'll contact you soon.</p>
+      <div class="mt-3 d-grid gap-2">
+        <button class="btn btn-neon" onclick="closePopup('thankPopup')">Close</button>
+        <a href="#home" class="btn btn-outline-light">Back to Home</a>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- REGISTER FORM POPUP -->
-<div class="modal fade" id="registerModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content neon-card">
-      <div class="modal-header">
-        <h5 class="modal-title">Register Now</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+  <!-- =================== Integration Script (Google Apps Script + WhatsApp) =================== -->
+  <script>
+    // ========== CONFIG ==========
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyccgLZzOhFESD0AsgX_SLA8LSoVzNZ8nxwJ4ztYt-x_xsM-Tsd89q-msNJLc4KruU-mA/exec";
+    const WHATSAPP_NUMBER = "919876543210"; // your WhatsApp recipient number (country code + number)
+    const DASHBOARD_SHEET_URL = "SHEET_URL_PLACEHOLDER"; // replace with your Google Sheet URL for admin
 
-      <div class="modal-body">
-        <form id="registerForm">
-          <input type="text" class="form-control mb-2" name="name" placeholder="Your Name" required>
-          <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
-          <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" required>
-          <input type="text" class="form-control mb-2" name="course" placeholder="Course Name" required>
+    // Attach dashboard URL if user replaced placeholder
+    document.getElementById('openDashboard').href = DASHBOARD_SHEET_URL;
 
-          <button type="submit" class="btn btn-success w-100">Complete Registration</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbyccgLZzOhFESD0AsgX_SLA8LSoVzNZ8nxwJ4ztYt-x_xsM-Tsd89q-msNJLc4KruU-mA/exec";
+    // ========== POPUP UTIL ==========
+    function openPopup(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.style.display = "flex";
+      el.setAttribute('aria-hidden','false');
+      // focus first input
+      const first = el.querySelector('input, textarea, select, button');
+      if(first) first.focus();
+      // lock scroll
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function closePopup(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.style.display = "none";
+      el.setAttribute('aria-hidden','true');
+      document.documentElement.style.overflow = '';
+    }
 
-// Enquiry Form Submit
-document.getElementById("enquireForm").addEventListener("submit", function(e){
-    e.preventDefault();
+    // ========== HELPER ==========
+    function showFeedback(containerId, msg, isError=false){
+      const el = document.getElementById(containerId);
+      if(!el) return;
+      el.innerText = msg;
+      el.style.color = isError ? '#ff7777' : '#bdf7ff';
+    }
 
-    let data = Object.fromEntries(new FormData(this).entries());
+    // ========== SUBMIT HANDLERS ==========
+    async function sendToSheet(payload){
+      // send to Google Apps Script (no CORS headers needed; Apps Script endpoint should allow)
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method:'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        // apps script returns JSON; we won't strictly depend on it
+        return res.ok;
+      } catch (err){
+        console.error('sheet post error', err);
+        return false;
+      }
+    }
 
-    // Google Sheet submit
-    fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data)
+    // open WhatsApp chat with prefilled message (opens new tab)
+    function openWhatsApp(prefilled){
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(prefilled)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // ========== Enquiry form ==========
+    document.getElementById('enquireForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('enquireSubmit');
+      btn.disabled = true;
+      btn.innerText = 'Sending...';
+      showFeedback('enquireFeedback', '');
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.timestamp = new Date().toISOString();
+
+      const success = await sendToSheet({ type:'enquiry', ...data });
+      if(success){
+        // success feedback + open WhatsApp and thank-you popup
+        const waMsg = `🔔 New Enquiry from Nova Academy\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nCourse: ${data.course}\nMessage: ${data.message || '-'}`;
+        openWhatsApp(waMsg);
+
+        closePopup('enquirePopup');
+        openPopup('thankPopup');
+        form.reset();
+      } else {
+        showFeedback('enquireFeedback','⚠️ Submission failed. Please try again later.', true);
+      }
+
+      btn.disabled = false;
+      btn.innerText = 'Send Enquiry';
     });
 
-    // WhatsApp Auto Message
-    let message =
-        `📌 New Enquiry\n` +
-        `👤 Name: ${data.name}\n` +
-        `📧 Email: ${data.email}\n` +
-        `📱 Phone: ${data.phone}\n` +
-        `📘 Course: ${data.course}\n` +
-        `📝 Message: ${data.message}`;
+    // ========== Register form ==========
+    document.getElementById('registerForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('registerSubmit');
+      btn.disabled = true;
+      btn.innerText = 'Registering...';
+      showFeedback('registerFeedback', '');
 
-    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`);
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.timestamp = new Date().toISOString();
 
-    alert("Enquiry sent successfully!");
-    this.reset();
-});
+      const success = await sendToSheet({ type:'register', ...data });
+      if(success){
+        const waMsg = `✅ New Registration at Nova Academy\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nCourse: ${data.course}`;
+        openWhatsApp(waMsg);
 
+        closePopup('registerPopup');
+        openPopup('thankPopup');
+        form.reset();
+      } else {
+        showFeedback('registerFeedback','⚠️ Registration failed. Please try again later.', true);
+      }
 
-// Registration Form Submit
-document.getElementById("registerForm").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    let data = Object.fromEntries(new FormData(this).entries());
-
-    fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data)
+      btn.disabled = false;
+      btn.innerText = 'Complete Registration';
     });
 
-    let message =
-        `🟢 New Registration\n` +
-        `👤 Name: ${data.name}\n` +
-        `📧 Email: ${data.email}\n` +
-        `📱 Phone: ${data.phone}\n` +
-        `📘 Course: ${data.course}`;
+    // Close popups on pressing ESC
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        ['enquirePopup','registerPopup','thankPopup'].forEach(id => {
+          const el = document.getElementById(id);
+          if(el && el.style.display === 'flex') closePopup(id);
+        });
+      }
+    });
 
-    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`);
-
-    alert("Registration completed!");
-    this.reset();
-});
-</script>
-
+    // Accessibility: close when clicking outside popup box
+    document.querySelectorAll('.popup-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(ev){
+        if(ev.target === overlay) closePopup(overlay.id);
+      });
+    });
+  </script>
 </body>
 </html>
