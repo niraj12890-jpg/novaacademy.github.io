@@ -189,8 +189,10 @@
                 <p>Date: 15 Feb 2025</p>
                 <p>Fee: ₹499</p>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-success flex-fill" onclick="openPopup('registerPopup')">Register Now</button>
-                    <button class="btn btn-neon flex-fill" onclick="openPopup('enquirePopup')">Enquire Now</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enquireModal">Enquire Now</button>
+
+<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">Register Now</button>
+
                 </div>
             </div>
         </div>
@@ -239,64 +241,107 @@
     © 2025 Nova Academy — All Rights Reserved
 </footer>
 
-<!-- ===================== POPUP FORMS ===================== -->
+<!-- ENQUIRE FORM POPUP -->
+<div class="modal fade" id="enquireModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content neon-card">
+      <div class="modal-header">
+        <h5 class="modal-title">Enquire Now</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-<!-- ENQUIRE POPUP -->
-<div id="enquirePopup" class="popup-overlay">
-  <div class="popup-box">
-    <h2 class="neon-text mb-3">Enquiry Form</h2>
+      <div class="modal-body">
+        <form id="enquireForm">
+          <input type="text" class="form-control mb-2" name="name" placeholder="Your Name" required>
+          <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
+          <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" required>
+          <input type="text" class="form-control mb-2" name="course" placeholder="Interested Course">
+          <textarea class="form-control mb-2" name="message" placeholder="Message"></textarea>
 
-    <label>Full Name</label>
-    <input type="text" class="form-control mb-2">
-
-    <label>Email</label>
-    <input type="email" class="form-control mb-2">
-
-    <label>Mobile Number</label>
-    <input type="text" class="form-control mb-2">
-
-    <label>Select Workshop</label>
-    <select class="form-control mb-3">
-      <option>AI in Mathematical Modeling</option>
-    </select>
-
-    <button class="btn btn-neon w-100 mb-3">Submit Enquiry</button>
-    <button class="btn btn-danger w-100" onclick="closePopup('enquirePopup')">Back</button>
+          <button type="submit" class="btn btn-primary w-100">Submit Enquiry</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- REGISTER POPUP -->
-<div id="registerPopup" class="popup-overlay">
-  <div class="popup-box">
-    <h2 class="text-success mb-3">Register Form</h2>
 
-    <label>Full Name</label>
-    <input type="text" class="form-control mb-2">
+<!-- REGISTER FORM POPUP -->
+<div class="modal fade" id="registerModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content neon-card">
+      <div class="modal-header">
+        <h5 class="modal-title">Register Now</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-    <label>Email</label>
-    <input type="email" class="form-control mb-2">
+      <div class="modal-body">
+        <form id="registerForm">
+          <input type="text" class="form-control mb-2" name="name" placeholder="Your Name" required>
+          <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
+          <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" required>
+          <input type="text" class="form-control mb-2" name="course" placeholder="Course Name" required>
 
-    <label>Mobile Number</label>
-    <input type="text" class="form-control mb-2">
-
-    <label>Select Workshop</label>
-    <select class="form-control mb-3">
-      <option>AI in Mathematical Modeling</option>
-    </select>
-
-    <button class="btn btn-success w-100 mb-3">Submit Registration</button>
-    <button class="btn btn-danger w-100" onclick="closePopup('registerPopup')">Back</button>
+          <button type="submit" class="btn btn-success w-100">Complete Registration</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- POPUP SCRIPT -->
 <script>
-function openPopup(id) {
-  document.getElementById(id).style.display = "flex";
-}
-function closePopup(id) {
-  document.getElementById(id).style.display = "none";
-}
+const scriptURL = "https://script.google.com/macros/s/AKfycbyccgLZzOhFESD0AsgX_SLA8LSoVzNZ8nxwJ4ztYt-x_xsM-Tsd89q-msNJLc4KruU-mA/exec";
+
+// Enquiry Form Submit
+document.getElementById("enquireForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let data = Object.fromEntries(new FormData(this).entries());
+
+    // Google Sheet submit
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+    });
+
+    // WhatsApp Auto Message
+    let message =
+        `📌 New Enquiry\n` +
+        `👤 Name: ${data.name}\n` +
+        `📧 Email: ${data.email}\n` +
+        `📱 Phone: ${data.phone}\n` +
+        `📘 Course: ${data.course}\n` +
+        `📝 Message: ${data.message}`;
+
+    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`);
+
+    alert("Enquiry sent successfully!");
+    this.reset();
+});
+
+
+// Registration Form Submit
+document.getElementById("registerForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let data = Object.fromEntries(new FormData(this).entries());
+
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+    });
+
+    let message =
+        `🟢 New Registration\n` +
+        `👤 Name: ${data.name}\n` +
+        `📧 Email: ${data.email}\n` +
+        `📱 Phone: ${data.phone}\n` +
+        `📘 Course: ${data.course}`;
+
+    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`);
+
+    alert("Registration completed!");
+    this.reset();
+});
 </script>
 
 </body>
